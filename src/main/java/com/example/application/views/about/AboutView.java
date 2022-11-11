@@ -1,9 +1,8 @@
 package com.example.application.views.about;
 
 import com.example.application.views.MainLayout;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -15,12 +14,17 @@ public class AboutView extends VerticalLayout {
     public AboutView() {
         setSpacing(false);
 
-        Image img = new Image("images/empty-plant.png", "placeholder plant");
-        img.setWidth("200px");
-        add(img);
+        Checkbox draggable = new Checkbox("Make draggable");
+        Checkbox closeOnOutsideClick = new Checkbox("Close on Outside Click");
+        Checkbox resizable = new Checkbox("Resizable");
+        Button openDialog = new Button("Open Dialog");
+        openDialog.addClickListener(event -> new DemoDialog(DialogProperties.builder()
+                .draggable(draggable.getValue())
+                .closeOnOutsideClick(closeOnOutsideClick.getValue())
+                .resizable(resizable.getValue())
+                .build()).open());
 
-        add(new H2("This place intentionally left empty"));
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+        add(draggable, closeOnOutsideClick, resizable, openDialog);
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
